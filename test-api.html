@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - Inventory Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #0097A7;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        button {
+            background: #0097A7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #00838F;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Inventory API Test</h1>
+        
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-label">Total Items (API)</div>
+                <div class="stat-value" id="totalItems">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Items Loaded</div>
+                <div class="stat-value" id="loadedItems">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Per Page</div>
+                <div class="stat-value" id="perPage">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Current Page</div>
+                <div class="stat-value" id="currentPage">-</div>
+            </div>
+        </div>
+
+        <div>
+            <button onclick="testAPI(25)">Test with 25 per page</button>
+            <button onclick="testAPI(1000)">Test with 1000 per page</button>
+            <button onclick="testAPI()">Test default</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost/Smart%20Hospital%20Inventory%20Management%20System%20(SHIMS)/backend/public/api';
+        
+        async function testAPI(perPage) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<div class="loading">Loading...</div>';
+            
+            try {
+                // Build URL with params
+                let url = `${API_URL}/items`;
+                const params = new URLSearchParams();
+                if (perPage) {
+                    params.append('per_page', perPage);
+                }
+                params.append('_t', Date.now()); // Cache buster
+                
+                if (params.toString()) {
+                    url += '?' + params.toString();
+                }
+                
+                console.log('Fetching:', url);
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                // Update stats
+                document.getElementById('totalItems').textContent = data.total || 'N/A';
+                document.getElementById('loadedItems').textContent = data.data?.length || 0;
+                document.getElementById('perPage').textContent = data.per_page || 'N/A';
+                document.getElementById('currentPage').textContent = data.current_page || 'N/A';
+                
+                // Show success message
+                const itemsCount = data.data?.length || 0;
+                const total = data.total || 0;
+                
+                let message = `<div class="success">
+                    <strong>✓ Success!</strong><br>
+                    Loaded ${itemsCount} items out of ${total} total items in database.
+                `;
+                
+                if (itemsCount < total) {
+                    message += `<br><br><strong>⚠️ Warning:</strong> Not all items were loaded. 
+                    Try increasing the per_page parameter or implement pagination.`;
+                }
+                
+                message += `</div>`;
+                
+                // Show first 3 items
+                if (data.data && data.data.length > 0) {
+                    message += `<h3 style="margin-top: 20px;">First 3 Items:</h3>`;
+                    message += '<pre>' + JSON.stringify(data.data.slice(0, 3), null, 2) + '</pre>';
+                }
+                
+                resultDiv.innerHTML = message;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<div class="error">
+                    <strong>✗ Error:</strong><br>
+                    ${error.message}
+                    <br><br>
+                    Check the browser console for more details.
+                </div>`;
+            }
+        }
+        
+        // Auto-run test on load
+        window.addEventListener('load', () => {
+            testAPI(1000);
+        });
+    </script>
+</body>
+</html>

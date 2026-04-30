@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator for SHIMS</title>
+</head>
+<body>
+    <h2>SHIMS Favicon Generator</h2>
+    <p>Use this canvas to generate a favicon:</p>
+    
+    <canvas id="favicon" width="32" height="32" style="border: 1px solid #ccc; image-rendering: pixelated; width: 128px; height: 128px;"></canvas>
+    
+    <br><br>
+    <button onclick="downloadFavicon()">Download as ICO</button>
+    
+    <script>
+        const canvas = document.getElementById('favicon');
+        const ctx = canvas.getContext('2d');
+        
+        // Draw red background
+        ctx.fillStyle = '#dc2626';
+        ctx.fillRect(0, 0, 32, 32);
+        
+        // Draw white cross
+        ctx.fillStyle = 'white';
+        // Vertical bar
+        ctx.fillRect(12, 6, 8, 20);
+        // Horizontal bar
+        ctx.fillRect(6, 12, 20, 8);
+        
+        function downloadFavicon() {
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

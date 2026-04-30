@@ -1,0 +1,238 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans:
+        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+    /* Clean white background with subtle warmth */
+    --background: oklch(0.985 0.002 264);
+    /* Darker text for better readability */
+    --foreground: oklch(0.25 0.015 264);
+    /* Bright white cards with subtle shadow */
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.25 0.015 264);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.25 0.015 264);
+    /* Vibrant teal primary - more saturated for visibility */
+    --primary: oklch(0.52 0.15 195);
+    --primary-foreground: oklch(0.99 0 0);
+    /* Light blue-gray secondary */
+    --secondary: oklch(0.94 0.015 240);
+    --secondary-foreground: oklch(0.25 0.015 264);
+    /* Subtle muted backgrounds */
+    --muted: oklch(0.96 0.008 240);
+    --muted-foreground: oklch(0.48 0.02 264);
+    /* Light teal accent */
+    --accent: oklch(0.95 0.025 195);
+    --accent-foreground: oklch(0.25 0.015 264);
+    /* Bright red for destructive actions */
+    --destructive: oklch(0.55 0.22 27);
+    --destructive-foreground: oklch(0.99 0 0);
+    /* Visible borders */
+    --border: oklch(0.88 0.008 240);
+    --input: oklch(0.88 0.008 240);
+    /* Teal focus ring */
+    --ring: oklch(0.52 0.15 195);
+    /* Vibrant chart colors */
+    --chart-1: oklch(0.52 0.15 195);
+    --chart-2: oklch(0.55 0.18 240);
+    --chart-3: oklch(0.6 0.14 160);
+    --chart-4: oklch(0.58 0.16 280);
+    --chart-5: oklch(0.62 0.13 140);
+    --radius: 0.625rem;
+    /* Dark professional sidebar */
+    --sidebar: oklch(0.20 0.025 240);
+    --sidebar-foreground: oklch(0.94 0.01 240);
+    --sidebar-primary: oklch(0.60 0.16 195);
+    --sidebar-primary-foreground: oklch(0.99 0 0);
+    --sidebar-accent: oklch(0.26 0.025 240);
+    --sidebar-accent-foreground: oklch(0.96 0.01 240);
+    --sidebar-border: oklch(0.32 0.025 240);
+    --sidebar-ring: oklch(0.60 0.16 195);
+}
+
+.dark {
+    --background: oklch(0.16 0.015 240);
+    --foreground: oklch(0.95 0.01 240);
+    --card: oklch(0.18 0.015 240);
+    --card-foreground: oklch(0.95 0.01 240);
+    --popover: oklch(0.18 0.015 240);
+    --popover-foreground: oklch(0.95 0.01 240);
+    /* Lighter teal for dark mode */
+    --primary: oklch(0.65 0.14 192.5);
+    --primary-foreground: oklch(0.16 0.015 240);
+    --secondary: oklch(0.25 0.02 240);
+    --secondary-foreground: oklch(0.95 0.01 240);
+    --muted: oklch(0.25 0.02 240);
+    --muted-foreground: oklch(0.7 0.015 240);
+    --accent: oklch(0.28 0.025 200);
+    --accent-foreground: oklch(0.95 0.01 240);
+    /* Softer red for dark mode */
+    --destructive: oklch(0.55 0.22 27.325);
+    --destructive-foreground: oklch(0.99 0 0);
+    --border: oklch(0.28 0.02 240);
+    --input: oklch(0.28 0.02 240);
+    --ring: oklch(0.65 0.14 192.5);
+    /* Chart colors for dark mode */
+    --chart-1: oklch(0.65 0.14 192.5);
+    --chart-2: oklch(0.7 0.15 220);
+    --chart-3: oklch(0.75 0.12 160);
+    --chart-4: oklch(0.7 0.15 280);
+    --chart-5: oklch(0.75 0.12 140);
+    /* Darker sidebar for dark mode */
+    --sidebar: oklch(0.14 0.015 240);
+    --sidebar-foreground: oklch(0.92 0.01 240);
+    --sidebar-primary: oklch(0.65 0.14 192.5);
+    --sidebar-primary-foreground: oklch(0.16 0.015 240);
+    --sidebar-accent: oklch(0.22 0.02 240);
+    --sidebar-accent-foreground: oklch(0.95 0.01 240);
+    --sidebar-border: oklch(0.25 0.02 240);
+    --sidebar-ring: oklch(0.65 0.14 192.5);
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Force mobile-first responsive behavior */
+@media (max-width: 767px) {
+    .dashboard-card-title {
+        font-size: 0.75rem !important; /* text-xs - smaller for mobile */
+        line-height: 1rem !important;
+    }
+    
+    .dashboard-card-number {
+        font-size: 0.875rem !important; /* text-sm - compact but readable */
+        line-height: 1.25rem !important;
+    }
+    
+    .dashboard-card-icon {
+        width: 0.75rem !important; /* w-3 - smaller icons */
+        height: 0.75rem !important; /* h-3 */
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr !important; /* 2 columns on mobile */
+        gap: 0.5rem !important; /* Tight gap for mobile */
+    }
+    
+    .dashboard-card {
+        min-height: 140px !important; /* Taller cards to fit all info */
+        padding: 0.75rem !important; /* Compact padding */
+    }
+    
+    .dashboard-card-header {
+        padding-bottom: 0.25rem !important; /* Minimal space between header and content */
+        margin-bottom: 0 !important;
+    }
+    
+    .dashboard-card-content {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    
+    /* Smaller text for mobile to fit more info */
+    .dashboard-card .text-xs {
+        font-size: 0.625rem !important; /* Even smaller sub-text */
+        line-height: 0.875rem !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .dashboard-card-title {
+        font-size: 0.875rem !important; /* text-sm */
+    }
+    
+    .dashboard-card-number {
+        font-size: 1.125rem !important; /* text-lg */
+    }
+    
+    .dashboard-card-icon {
+        width: 1rem !important; /* w-4 */
+        height: 1rem !important; /* h-4 */
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 columns on tablet */
+    }
+    
+    .dashboard-card {
+        min-height: 140px !important; /* Keep desktop height */
+    }
+}
+
+@media (min-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 columns on desktop */
+    }
+}
+
+@media (min-width: 1280px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(4, 1fr) !important; /* 4 columns on large screens */
+    }
+}

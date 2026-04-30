@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Soft warm background - less bright */
+    --background: 210 15% 95%;
+    /* Comfortable dark text */
+    --foreground: 222 47% 15%;
+    
+    /* Soft white cards with subtle warmth */
+    --card: 210 10% 98%;
+    --card-foreground: 222 47% 15%;
+    
+    --popover: 210 10% 98%;
+    --popover-foreground: 222 47% 15%;
+    
+    /* Slightly muted teal primary */
+    --primary: 195 85% 42%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Warmer secondary backgrounds */
+    --secondary: 210 25% 93%;
+    --secondary-foreground: 222 47% 15%;
+    
+    /* Comfortable muted backgrounds */
+    --muted: 210 25% 93%;
+    --muted-foreground: 215 16% 52%;
+    
+    /* Soft teal accent */
+    --accent: 195 40% 92%;
+    --accent-foreground: 222 47% 15%;
+    
+    /* Softer red for destructive actions */
+    --destructive: 0 75% 58%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Subtle but visible borders */
+    --border: 214 25% 88%;
+    --input: 214 25% 88%;
+    
+    /* Teal focus ring */
+    --ring: 195 85% 42%;
+    
+    /* Light mode sidebar - soft and harmonious */
+    --sidebar: 210 15% 92%;
+    --sidebar-foreground: 222 47% 25%;
+    --sidebar-primary: 195 85% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 88%;
+    --sidebar-accent-foreground: 222 47% 25%;
+    --sidebar-border: 214 25% 85%;
+    --sidebar-ring: 195 85% 42%;
+    
+    /* Softer chart colors */
+    --chart-1: 195 85% 42%;
+    --chart-2: 221 75% 55%;
+    --chart-3: 142 70% 40%;
+    --chart-4: 280 60% 62%;
+    --chart-5: 160 55% 48%;
+    
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+    
+    /* Lighter teal for dark mode */
+    --primary: 195 100% 50%;
+    --primary-foreground: 222 47% 11%;
+    
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    
+    --accent: 195 50% 20%;
+    --accent-foreground: 210 40% 98%;
+    
+    /* Softer red for dark mode */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    
+    --ring: 195 100% 50%;
+    
+    /* Sidebar colors for dark mode */
+    --sidebar: 217 33% 12%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 195 100% 50%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 195 100% 50%;
+    
+    /* Chart colors for dark mode */
+    --chart-1: 195 100% 50%;
+    --chart-2: 221 83% 63%;
+    --chart-3: 142 76% 46%;
+    --chart-4: 280 65% 70%;
+    --chart-5: 160 60% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Grid pattern for login background */
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  /* Floating animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-30px) translateX(20px) rotate(5deg);
+    }
+    66% {
+      transform: translateY(20px) translateX(-15px) rotate(-5deg);
+    }
+  }
+  
+  @keyframes float-delayed {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+    33% {
+      transform: translateY(25px) translateX(-20px) rotate(-5deg);
+    }
+    66% {
+      transform: translateY(-20px) translateX(15px) rotate(5deg);
+    }
+  }
+  
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) translateX(10px) scale(1.05);
+    }
+  }
+  
+  .animate-float {
+    animation: float 20s ease-in-out infinite;
+  }
+  
+  .animate-float-delayed {
+    animation: float-delayed 25s ease-in-out infinite;
+  }
+  
+  .animate-float-slow {
+    animation: float-slow 30s ease-in-out infinite;
+  }
+}
+
+/* Dashboard responsive styles */
+@media (max-width: 767px) {
+  .dashboard-card-title {
+    font-size: 0.75rem !important;
+    line-height: 1rem !important;
+  }
+  
+  .dashboard-card-number {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
+  
+  .dashboard-card-icon {
+    width: 0.75rem !important;
+    height: 0.75rem !important;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+  }
+  
+  .dashboard-card {
+    min-height: 140px !important;
+    padding: 0.75rem !important;
+  }
+  
+  .dashboard-card-header {
+    padding-bottom: 0.25rem !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .dashboard-card-content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .dashboard-card .text-xs {
+    font-size: 0.625rem !important;
+    line-height: 0.875rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .dashboard-card-title {
+    font-size: 0.875rem !important;
+  }
+  
+  .dashboard-card-number {
+    font-size: 1.125rem !important;
+  }
+  
+  .dashboard-card-icon {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .dashboard-card {
+    min-height: 140px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
