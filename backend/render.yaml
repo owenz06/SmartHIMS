@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: shims-backend
+    env: php
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_NAME
+        value: SHIMS
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: shims-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: shims-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: shims-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: shims-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: shims-db
+          property: password
+      - key: DB_SSLMODE
+        value: require
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+
+databases:
+  - name: shims-db
+    databaseName: shims
+    user: shims_user
+    plan: free
